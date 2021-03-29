@@ -10,9 +10,10 @@ from homeassistant.const import (
     TEMP_CELSIUS,
 )
 
-DEFAULT_NAME: str = "Nettigo Air Monitor"
+DEFAULT_NAME = "Nettigo Air Monitor"
 DEFAULT_UPDATE_INTERVAL = timedelta(minutes=5)
-DOMAIN: str = "nettigo"
+DOMAIN = "nettigo"
+MANUFACTURER = "Nettigo"
 
 SENSORS = {
     "BME280_humidity": (PERCENTAGE, DEVICE_CLASS_HUMIDITY, "BME280 Humidity"),

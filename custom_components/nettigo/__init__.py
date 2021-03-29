@@ -14,7 +14,7 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import DEFAULT_NAME, DEFAULT_UPDATE_INTERVAL, DOMAIN
+from .const import DEFAULT_NAME, DEFAULT_UPDATE_INTERVAL, DOMAIN, MANUFACTURER
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -103,5 +103,6 @@ class NettigoUpdateCoordinator(DataUpdateCoordinator):
             "identifiers": {(DOMAIN, self._unique_id)},
             "connections": {(CONNECTION_NETWORK_MAC, self._unique_id)},
             "name": DEFAULT_NAME,
-            "sw_version": self.data["software_version"]
+            "sw_version": self.data["software_version"],
+            "manufacturer": MANUFACTURER,
         }
