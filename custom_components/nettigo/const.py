@@ -21,7 +21,12 @@ MANUFACTURER = "Nettigo"
 SENSORS = {
     "BME280_humidity": ("BME280 Humidity", PERCENTAGE, DEVICE_CLASS_HUMIDITY, True),
     "BME280_pressure": ("BME280 Pressure", PRESSURE_HPA, DEVICE_CLASS_PRESSURE, True),
-    "BME280_temperature": ("BME280 Temperature", TEMP_CELSIUS, DEVICE_CLASS_TEMPERATURE, True),
+    "BME280_temperature": (
+        "BME280 Temperature",
+        TEMP_CELSIUS,
+        DEVICE_CLASS_TEMPERATURE,
+        True,
+    ),
     "signal": (
         f"{DEFAULT_NAME} Signal Strength",
         SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
