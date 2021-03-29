@@ -7,11 +7,11 @@ from aiohttp.client_exceptions import ClientConnectorError
 from async_timeout import timeout
 from nettigo import ApiError, Nettigo
 
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.const import CONF_HOST
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DEFAULT_NAME, DEFAULT_UPDATE_INTERVAL, DOMAIN, MANUFACTURER

@@ -8,7 +8,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from .const import DOMAIN, SENSORS
+from .const import ATTR_SENSORS, DOMAIN, SENSORS
 
 
 async def async_setup_entry(
@@ -19,7 +19,7 @@ async def async_setup_entry(
 
     sensors = []
     for sensor in SENSORS:
-        if sensor in coordinator.data["sensordatavalues"]:
+        if sensor in coordinator.data[ATTR_SENSORS]:
             sensors.append(NettigoSensor(coordinator, sensor))
 
     async_add_entities(sensors, False)
@@ -36,26 +36,29 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def name(self) -> str:
         """Return the name."""
-        return SENSORS[self.sensor_type][2]
+        return SENSORS[self.sensor_type][0]
 
     @property
     def state(self) -> Optional[str]:
         """Return the state."""
         if self.sensor_type == "BME280_pressure":
-            return round(
-                self.coordinator.data["sensordatavalues"][self.sensor_type] / 100
-            )
-        return round(self.coordinator.data["sensordatavalues"][self.sensor_type], 1)
+            return round(self.coordinator.data[ATTR_SENSORS][self.sensor_type] / 100)
+        return self.coordinator.data[ATTR_SENSORS][self.sensor_type]
 
     @property
     def unit_of_measurement(self) -> str:
         """Return the unit the value is expressed in."""
-        return SENSORS[self.sensor_type][0]
+        return SENSORS[self.sensor_type][1]
 
     @property
     def device_class(self) -> str:
         """Return the class of this sensor."""
-        return SENSORS[self.sensor_type][1]
+        return SENSORS[self.sensor_type][2]
+
+    @property
+    def entity_registry_enabled_default(self):
+        """Return if the entity should be enabled when first added to the entity registry."""
+        return SENSORS[self.sensor_type][3]
 
     @property
     def unique_id(self) -> str:
