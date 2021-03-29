@@ -7,8 +7,9 @@ from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 
-from .const import DOMAIN, SENSORS
+from .const import DEFAULT_NAME, DOMAIN, SENSORS
 
 
 async def async_setup_entry(
@@ -20,7 +21,7 @@ async def async_setup_entry(
     sensors = []
     for sensor in SENSORS:
         if sensor in coordinator.data["sensordatavalues"]:
-            sensors.append(NettigoSensor(coordinator, sensor))
+            sensors.append(NettigoSensor(coordinator, sensor, entry.unique_id))
 
     async_add_entities(sensors, False)
 
@@ -28,10 +29,11 @@ async def async_setup_entry(
 class NettigoSensor(CoordinatorEntity):
     """Define an Nettigo sensor."""
 
-    def __init__(self, coordinator: DataUpdateCoordinator, sensor_type: str):
+    def __init__(self, coordinator: DataUpdateCoordinator, sensor_type: str, unique_id: str):
         """Initialize."""
         super().__init__(coordinator)
         self.sensor_type = sensor_type
+        self._unique_id = unique_id
 
     @property
     def name(self) -> str:
@@ -51,12 +53,13 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def unique_id(self) -> str:
         """Return a unique_id for this entity."""
-        return f"{device.unique_id}-{self.sensor_type.lower()}"
+        return f"{self._unique_id}-{self.sensor_type}"
 
     @property
     def device_info(self) -> dict:
         """Return the device info."""
         return {
-            "identifiers": {(DOMAIN, self.coordinator)},
-            "name": "Device Name",
+            "identifiers": {(DOMAIN, self._unique_id)},
+            "connections": {(CONNECTION_NETWORK_MAC, self._unique_id)},
+            "name": DEFAULT_NAME,
         }

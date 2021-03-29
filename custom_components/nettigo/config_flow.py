@@ -9,6 +9,7 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import CONF_HOST
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.device_registry import format_mac
 
 from .const import DOMAIN  # pylint:disable=unused-import
 
@@ -30,17 +31,17 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         websession = async_get_clientsession(self.hass)
 
         if user_input is not None:
-            device = Nettigo(websession, user_input[CONF_HOST])
+            nettigo = Nettigo(websession, user_input[CONF_HOST])
             try:
                 with async_timeout.timeout(5):
-                    mac = await device.async_get_mac()
+                    mac = await nettigo.async_get_mac_address()
             except (ApiError, ClientConnectorError):
                 errors["base"] = "cannot_connect"
             except CannotGetMac:
                 errors["base"] = "device_unsupported"
             else:
 
-                await self.async_set_unique_id(mac)
+                await self.async_set_unique_id(format_mac(mac))
                 self._abort_if_unique_id_configured()
 
                 return self.async_create_entry(
