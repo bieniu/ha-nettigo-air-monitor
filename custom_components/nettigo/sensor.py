@@ -1,5 +1,6 @@
 """Support for the Nettigo service."""
 from typing import Callable, Optional
+import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -11,6 +12,7 @@ from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 
 from .const import DEFAULT_NAME, DOMAIN, SENSORS
 
+_LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: Callable
@@ -43,12 +45,24 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def state(self) -> Optional[str]:
         """Return the state."""
-        return round(self.coordinator.data[self.sensor_type], 1)
+        if self.sensor_type == "BME280_pressure":
+            return round(self.coordinator.data["sensordatavalues"][self.sensor_type] / 100, 0)
+        return round(self.coordinator.data["sensordatavalues"][self.sensor_type], 1)
+
+    @property
+    def unit_of_measurement(self) -> str:
+        """Return the unit the value is expressed in."""
+        return SENSORS[self.sensor_type][0]
 
     @property
     def icon(self) -> str:
         """Return the icon."""
         return None
+
+    @property
+    def device_class(self) -> str:
+        """Return the class of this sensor."""
+        return SENSORS[self.sensor_type][1]
 
     @property
     def unique_id(self) -> str:
