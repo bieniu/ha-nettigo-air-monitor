@@ -1,18 +1,19 @@
 """Support for the Nettigo service."""
-from typing import Callable, Optional
 import logging
+from typing import Callable, Optional
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 
 from .const import DEFAULT_NAME, DOMAIN, SENSORS
 
 _LOGGER = logging.getLogger(__name__)
+
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: Callable
@@ -31,7 +32,9 @@ async def async_setup_entry(
 class NettigoSensor(CoordinatorEntity):
     """Define an Nettigo sensor."""
 
-    def __init__(self, coordinator: DataUpdateCoordinator, sensor_type: str, unique_id: str):
+    def __init__(
+        self, coordinator: DataUpdateCoordinator, sensor_type: str, unique_id: str
+    ):
         """Initialize."""
         super().__init__(coordinator)
         self.sensor_type = sensor_type
@@ -46,8 +49,9 @@ class NettigoSensor(CoordinatorEntity):
     def state(self) -> Optional[str]:
         """Return the state."""
         if self.sensor_type == "BME280_pressure":
-            _LOGGER.debug
-            return round(self.coordinator.data["sensordatavalues"][self.sensor_type] / 100)
+            return round(
+                self.coordinator.data["sensordatavalues"][self.sensor_type] / 100
+            )
         return round(self.coordinator.data["sensordatavalues"][self.sensor_type], 1)
 
     @property
