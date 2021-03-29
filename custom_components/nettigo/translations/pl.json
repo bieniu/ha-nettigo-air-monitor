@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Nettigo Air Monitor",
+        "description": "Konfiguracja urządzenia Nettigo Air Monitor.",
+        "data": {
+          "host": "Host"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można się połączyć z urządzeniem",
+      "device_unsupported": "Urządzenie nie jest obsługiwane"
+    },
+    "abort": {
+      "already_configured": "Integracja Nettigo Air Monitor jest już skonfigurowana dla tego urządzenia."
+    }
+  }
+}

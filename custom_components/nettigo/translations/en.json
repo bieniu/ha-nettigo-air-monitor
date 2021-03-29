@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Nettigo Air Monitor",
+        "description": "Set up Nettigo Air Monitor integration.",
+        "data": {
+          "host": "Host"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot connect to Nettigo Air Monitor device",
+      "device_unsupported": "The device is unsupported"
+    },
+    "abort": {
+      "already_configured": "Nettigo Air Monitor integration for this device is already configured."
+    }
+  }
+}

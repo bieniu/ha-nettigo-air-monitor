@@ -1,0 +1,10 @@
+{
+  "domain": "nettigo",
+  "name": "Nettigo Air Monitor",
+  "documentation": "https://github.com/bieniu/ha-nettigo",
+  "issue_tracker": "https://github.com/bieniu/ha-nettigo/issues",
+  "codeowners": ["@bieniu"],
+  "requirements": ["git+https://github.com/bieniu/nettigo.git@main#nettigo==0.0.1"],
+  "config_flow": true,
+  "version": "0.0.1"
+}
