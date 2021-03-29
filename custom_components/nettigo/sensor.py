@@ -42,8 +42,8 @@ class NettigoSensor(CoordinatorEntity):
     def state(self) -> Optional[str]:
         """Return the state."""
         if self.sensor_type == "BME280_pressure":
-            return round(self.coordinator.data[ATTR_SENSORS][self.sensor_type] / 100)
-        return self.coordinator.data[ATTR_SENSORS][self.sensor_type]
+            return round(self.coordinator.data[ATTR_SENSORS].get(self.sensor_type) / 100)
+        return self.coordinator.data[ATTR_SENSORS].get(self.sensor_type)
 
     @property
     def unit_of_measurement(self) -> str:
