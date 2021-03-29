@@ -1,0 +1,59 @@
+"""Support for the Nettigo air_quality service."""
+from typing import Callable, Optional
+
+from homeassistant.components.air_quality import (
+    ATTR_PM_2_5,
+    ATTR_PM_10,
+    AirQualityEntity,
+)
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.update_coordinator import (
+    CoordinatorEntity,
+    DataUpdateCoordinator,
+)
+
+from .const import ATTR_SENSORS, DEFAULT_NAME, DOMAIN
+
+
+async def async_setup_entry(
+    hass: HomeAssistant, entry: ConfigEntry, async_add_entities: Callable
+) -> None:
+    """Add a Nettigo entities from a config_entry."""
+    coordinator = hass.data[DOMAIN][entry.entry_id]
+
+    if "SDS_P1" or "SDS_P1" in coordinator.data[ATTR_SENSORS]:
+        async_add_entities([NettigoAirQuality(coordinator)], False)
+
+
+class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
+    """Define an Nettigo air quality."""
+
+    def __init__(self, coordinator: DataUpdateCoordinator):
+        """Initialize."""
+        super().__init__(coordinator)
+
+    @property
+    def name(self) -> str:
+        """Return the name."""
+        return DEFAULT_NAME
+
+    @property
+    def particulate_matter_2_5(self):
+        """Return the particulate matter 2.5 level."""
+        return self.coordinator.data[ATTR_SENSORS].get("SDS_P2")
+
+    @property
+    def particulate_matter_10(self):
+        """Return the particulate matter 10 level."""
+        return self.coordinator.data[ATTR_SENSORS].get("SDS_P1")
+
+    @property
+    def unique_id(self) -> str:
+        """Return a unique_id for this entity."""
+        return "self.coordinator.unique_id"
+
+    @property
+    def device_info(self) -> dict:
+        """Return the device info."""
+        return self.coordinator.device_info

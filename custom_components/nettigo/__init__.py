@@ -18,7 +18,7 @@ from .const import DEFAULT_NAME, DEFAULT_UPDATE_INTERVAL, DOMAIN, MANUFACTURER
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["sensor"]
+PLATFORMS = ["air_quality", "sensor"]
 
 
 async def async_setup(  # pylint:disable=unused-argument
