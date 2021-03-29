@@ -18,7 +18,7 @@ async def async_setup_entry(
     """Add a Nettigo entities from a config_entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    if "SDS_P1" or "SDS_P1" in coordinator.data[ATTR_SENSORS]:
+    if "SDS_P1" or "SDS_P2" in coordinator.data[ATTR_SENSORS]:
         async_add_entities([NettigoAirQuality(coordinator)], False)
 
 
