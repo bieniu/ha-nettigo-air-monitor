@@ -33,7 +33,7 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             nettigo = Nettigo(websession, user_input[CONF_HOST])
             try:
-                with async_timeout.timeout(5):
+                with async_timeout.timeout(10):
                     mac = await nettigo.async_get_mac_address()
             except (ApiError, ClientConnectorError):
                 errors["base"] = "cannot_connect"

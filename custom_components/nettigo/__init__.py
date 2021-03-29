@@ -82,7 +82,7 @@ class NettigoUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> Optional[Any]:
         """Update data via library."""
         try:
-            with timeout(5):
+            with timeout(10):
                 data = await self.nettigo.async_update()
         except (ApiError, ClientConnectorError) as error:
             raise UpdateFailed(error) from error
