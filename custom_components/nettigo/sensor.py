@@ -1,18 +1,14 @@
 """Support for the Nettigo service."""
-import logging
 from typing import Callable, Optional
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
 from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
 
-from .const import DEFAULT_NAME, DOMAIN, SENSORS
-
-_LOGGER = logging.getLogger(__name__)
+from .const import DOMAIN, SENSORS
 
 
 async def async_setup_entry(
@@ -24,7 +20,7 @@ async def async_setup_entry(
     sensors = []
     for sensor in SENSORS:
         if sensor in coordinator.data["sensordatavalues"]:
-            sensors.append(NettigoSensor(coordinator, sensor, entry.unique_id))
+            sensors.append(NettigoSensor(coordinator, sensor))
 
     async_add_entities(sensors, False)
 
@@ -32,13 +28,10 @@ async def async_setup_entry(
 class NettigoSensor(CoordinatorEntity):
     """Define an Nettigo sensor."""
 
-    def __init__(
-        self, coordinator: DataUpdateCoordinator, sensor_type: str, unique_id: str
-    ):
+    def __init__(self, coordinator: DataUpdateCoordinator, sensor_type: str):
         """Initialize."""
         super().__init__(coordinator)
         self.sensor_type = sensor_type
-        self._unique_id = unique_id
 
     @property
     def name(self) -> str:
@@ -60,11 +53,6 @@ class NettigoSensor(CoordinatorEntity):
         return SENSORS[self.sensor_type][0]
 
     @property
-    def icon(self) -> str:
-        """Return the icon."""
-        return None
-
-    @property
     def device_class(self) -> str:
         """Return the class of this sensor."""
         return SENSORS[self.sensor_type][1]
@@ -72,13 +60,9 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def unique_id(self) -> str:
         """Return a unique_id for this entity."""
-        return f"{self._unique_id}-{self.sensor_type}"
+        return f"{self.coordinator.unique_id}-{self.sensor_type}"
 
     @property
     def device_info(self) -> dict:
         """Return the device info."""
-        return {
-            "identifiers": {(DOMAIN, self._unique_id)},
-            "connections": {(CONNECTION_NETWORK_MAC, self._unique_id)},
-            "name": DEFAULT_NAME,
-        }
+        return self.coordinator.device_info
