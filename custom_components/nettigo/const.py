@@ -27,10 +27,26 @@ SENSORS = {
         DEVICE_CLASS_TEMPERATURE,
         True,
     ),
+    "BMP280_pressure": ("BMP280 Pressure", PRESSURE_HPA, DEVICE_CLASS_PRESSURE, True),
+    "BMP280_temperature": (
+        "BMP280 Temperature",
+        TEMP_CELSIUS,
+        DEVICE_CLASS_TEMPERATURE,
+        True,
+    ),
+    "humidity": ("DHT22 Humidity", PERCENTAGE, DEVICE_CLASS_HUMIDITY, True),
+    "SHT3X_humidity": ("SHT3X Humidity", PERCENTAGE, DEVICE_CLASS_HUMIDITY, True),
+    "SHT3X_temperature": (
+        "SHT3X Temperature",
+        TEMP_CELSIUS,
+        DEVICE_CLASS_TEMPERATURE,
+        True,
+    ),
     "signal": (
         f"{DEFAULT_NAME} Signal Strength",
         SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
         DEVICE_CLASS_SIGNAL_STRENGTH,
         False,
     ),
+    "temperature": ("DHT22 Temperature", TEMP_CELSIUS, DEVICE_CLASS_TEMPERATURE, True),
 }
