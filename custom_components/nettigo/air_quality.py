@@ -59,6 +59,12 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
         return self.coordinator.data[ATTR_SENSORS].get("SDS_P1")
 
     @property
+    @round_state
+    def carbon_dioxide(self) -> Optional[int]:
+        """Return the particulate matter 10 level."""
+        return self.coordinator.data[ATTR_SENSORS].get("conc_co2_ppm")
+
+    @property
     def unique_id(self) -> str:
         """Return a unique_id for this entity."""
         return self.coordinator.unique_id
