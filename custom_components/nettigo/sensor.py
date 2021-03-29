@@ -1,5 +1,5 @@
 """Support for the Nettigo service."""
-from typing import Callable, Optional
+from typing import Callable, Union
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -39,10 +39,12 @@ class NettigoSensor(CoordinatorEntity):
         return SENSORS[self.sensor_type][0]
 
     @property
-    def state(self) -> Optional[str]:
+    def state(self) -> Union[None, str, float]:
         """Return the state."""
         if self.sensor_type == "BME280_pressure":
-            return round(self.coordinator.data[ATTR_SENSORS].get(self.sensor_type) / 100)
+            return round(
+                self.coordinator.data[ATTR_SENSORS].get(self.sensor_type) / 100
+            )
         return self.coordinator.data[ATTR_SENSORS].get(self.sensor_type)
 
     @property
