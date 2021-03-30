@@ -105,6 +105,6 @@ class NettigoUpdateCoordinator(DataUpdateCoordinator):
             "identifiers": {(DOMAIN, self._unique_id)},
             "connections": {(CONNECTION_NETWORK_MAC, self._unique_id)},
             "name": DEFAULT_NAME,
-            "sw_version": self.data["software_version"],
+            "sw_version": self.nettigo.software_version,
             "manufacturer": MANUFACTURER,
         }

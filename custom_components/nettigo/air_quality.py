@@ -20,7 +20,7 @@ async def async_setup_entry(
 
     entities = []
     for sensor in AIR_QUALITY_SENSORS.keys():
-        if f"{sensor}_P1" in coordinator.data[ATTR_SENSORS]:
+        if f"{sensor}_p1" in coordinator.data:
             entities.append(NettigoAirQuality(coordinator, sensor))
 
     async_add_entities(entities, False)
@@ -55,19 +55,19 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     @round_state
     def particulate_matter_2_5(self) -> Optional[int]:
         """Return the particulate matter 2.5 level."""
-        return self.coordinator.data[ATTR_SENSORS].get(f"{self.sensor_type}_P2")
+        return getattr(self.coordinator.data, f"{self.sensor_type}_p2")
 
     @property
     @round_state
     def particulate_matter_10(self) -> Optional[int]:
         """Return the particulate matter 10 level."""
-        return self.coordinator.data[ATTR_SENSORS].get(f"{self.sensor_type}_P1")
+        return getattr(self.coordinator.data, f"{self.sensor_type}_p1")
 
     @property
     @round_state
     def carbon_dioxide(self) -> Optional[int]:
         """Return the particulate matter 10 level."""
-        return self.coordinator.data[ATTR_SENSORS].get("conc_co2_ppm")
+        return self.coordinator.data.conc_co2_ppm
 
     @property
     def unique_id(self) -> str:

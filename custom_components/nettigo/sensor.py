@@ -19,7 +19,7 @@ async def async_setup_entry(
 
     sensors = []
     for sensor in SENSORS:
-        if sensor in coordinator.data[ATTR_SENSORS]:
+        if sensor in coordinator.data:
             sensors.append(NettigoSensor(coordinator, sensor))
 
     async_add_entities(sensors, False)
@@ -41,7 +41,7 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def state(self) -> Union[None, str, float]:
         """Return the state."""
-        return self.coordinator.data[ATTR_SENSORS].get(self.sensor_type)
+        return self.coordinator.data.get(self.sensor_type)
 
     @property
     def unit_of_measurement(self) -> str:

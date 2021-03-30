@@ -19,80 +19,80 @@ DEFAULT_UPDATE_INTERVAL = timedelta(minutes=5)
 DOMAIN = "nettigo"
 MANUFACTURER = "Nettigo"
 
-AIR_QUALITY_SENSORS = {"SDS": "SDS011", "SPS30": "SPS30"}
+AIR_QUALITY_SENSORS = {"sds": "SDS011", "sps30": "SPS30"}
 
 SENSORS = {
-    "BME280_humidity": (
+    "bme280_humidity": (
         f"{DEFAULT_NAME} BME280 Humidity",
         PERCENTAGE,
         DEVICE_CLASS_HUMIDITY,
         None,
         True,
     ),
-    "BME280_pressure": (
+    "bme280_pressure": (
         f"{DEFAULT_NAME} BME280 Pressure",
         PRESSURE_HPA,
         DEVICE_CLASS_PRESSURE,
         None,
         True,
     ),
-    "BME280_temperature": (
+    "bme280_temperature": (
         f"{DEFAULT_NAME} BME280 Temperature",
         TEMP_CELSIUS,
         DEVICE_CLASS_TEMPERATURE,
         None,
         True,
     ),
-    "BMP280_pressure": (
+    "bmp280_pressure": (
         f"{DEFAULT_NAME} BMP280 Pressure",
         PRESSURE_HPA,
         DEVICE_CLASS_PRESSURE,
         None,
         True,
     ),
-    "BMP280_temperature": (
+    "bmp280_temperature": (
         f"{DEFAULT_NAME} BMP280 Temperature",
         TEMP_CELSIUS,
         DEVICE_CLASS_TEMPERATURE,
         None,
         True,
     ),
-    "HECA_humidity": (
+    "heca_humidity": (
         f"{DEFAULT_NAME} HECA Humidity",
         PERCENTAGE,
         DEVICE_CLASS_HUMIDITY,
         None,
         True,
     ),
-    "HECA_temperature": (
+    "heca_temperature": (
         f"{DEFAULT_NAME} HECA Temperature",
         TEMP_CELSIUS,
         DEVICE_CLASS_TEMPERATURE,
         None,
         True,
     ),
-    "SHT3X_humidity": (
+    "sht3x_humidity": (
         f"{DEFAULT_NAME} SHT3X Humidity",
         PERCENTAGE,
         DEVICE_CLASS_HUMIDITY,
         None,
         True,
     ),
-    "SHT3X_temperature": (
+    "sht3x_temperature": (
         f"{DEFAULT_NAME} SHT3X Temperature",
         TEMP_CELSIUS,
         DEVICE_CLASS_TEMPERATURE,
         None,
         True,
     ),
-    "SPS30_P0": (
+    "sps30_p0": (
         f"{DEFAULT_NAME} SPS30 Particulate Matter 1.0",
         CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
         None,
         "mdi:blur",
         True,
     ),
-    "SPS30_P4": (
+    "sps30_p4": (
         f"{DEFAULT_NAME} SPS30 Particulate Matter 4.0",
         CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
         None,
