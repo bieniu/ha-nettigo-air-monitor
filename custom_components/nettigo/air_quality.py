@@ -18,11 +18,12 @@ async def async_setup_entry(
     """Add a Nettigo entities from a config_entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    if (
-        "SDS_P1" in coordinator.data[ATTR_SENSORS]
-        or "SPS30_P1" in coordinator.data[ATTR_SENSORS]
-    ):
-        async_add_entities([NettigoAirQuality(coordinator)], False)
+    entities = []
+    for sensor in ["SDS", "SPS30"]:
+        if f"{sensor}_P1" in coordinator.data[ATTR_SENSORS]:
+            entities.append(NettigoAirQuality(coordinator, sensor))
+
+    async_add_entities(entities, False)
 
 
 def round_state(func):
@@ -40,30 +41,27 @@ def round_state(func):
 class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     """Define an Nettigo air quality."""
 
-    def __init__(self, coordinator: DataUpdateCoordinator):
+    def __init__(self, coordinator: DataUpdateCoordinator, sensor_type: str):
         """Initialize."""
         super().__init__(coordinator)
+        self.sensor_type = sensor_type
 
     @property
     def name(self) -> str:
         """Return the name."""
-        return DEFAULT_NAME
+        return f"{DEFAULT_NAME} {self.sensor_type}"
 
     @property
     @round_state
     def particulate_matter_2_5(self) -> Optional[int]:
         """Return the particulate matter 2.5 level."""
-        return self.coordinator.data[ATTR_SENSORS].get(
-            "SDS_P2"
-        ) or self.coordinator.data[ATTR_SENSORS].get("SPS30_P2")
+        return self.coordinator.data[ATTR_SENSORS].get(f"{self.sensor_type}_P2")
 
     @property
     @round_state
     def particulate_matter_10(self) -> Optional[int]:
         """Return the particulate matter 10 level."""
-        return self.coordinator.data[ATTR_SENSORS].get(
-            "SDS_P1"
-        ) or self.coordinator.data[ATTR_SENSORS].get("SDS_P1")
+        return self.coordinator.data[ATTR_SENSORS].get(f"{self.sensor_type}_P1")
 
     @property
     @round_state
@@ -74,7 +72,7 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     @property
     def unique_id(self) -> str:
         """Return a unique_id for this entity."""
-        return self.coordinator.unique_id
+        return f"{self.coordinator.unique_id}-{self.sensor_type}"
 
     @property
     def device_info(self) -> dict:

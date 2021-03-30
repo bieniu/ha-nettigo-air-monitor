@@ -89,6 +89,8 @@ class NettigoUpdateCoordinator(DataUpdateCoordinator):
         except (ApiError, ClientConnectorError) as error:
             raise UpdateFailed(error) from error
 
+        _LOGGER.debug(data)
+
         return data
 
     @property
