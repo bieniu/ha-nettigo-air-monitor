@@ -18,7 +18,7 @@ async def async_setup_entry(
     """Add a Nettigo entities from a config_entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
-    if "SDS_P1" or "SDS_P2" in coordinator.data[ATTR_SENSORS]:
+    if "SDS_P1" in coordinator.data[ATTR_SENSORS] or "SPS30_P1" in coordinator.data[ATTR_SENSORS]:
         async_add_entities([NettigoAirQuality(coordinator)], False)
 
 
@@ -50,13 +50,13 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     @round_state
     def particulate_matter_2_5(self) -> Optional[int]:
         """Return the particulate matter 2.5 level."""
-        return self.coordinator.data[ATTR_SENSORS].get("SDS_P2")
+        return self.coordinator.data[ATTR_SENSORS].get("SDS_P2") or self.coordinator.data[ATTR_SENSORS].get("SPS30_P2")
 
     @property
     @round_state
     def particulate_matter_10(self) -> Optional[int]:
         """Return the particulate matter 10 level."""
-        return self.coordinator.data[ATTR_SENSORS].get("SDS_P1")
+        return self.coordinator.data[ATTR_SENSORS].get("SDS_P1") or self.coordinator.data[ATTR_SENSORS].get("SDS_P1")
 
     @property
     @round_state

@@ -58,9 +58,14 @@ class NettigoSensor(CoordinatorEntity):
         return SENSORS[self.sensor_type][2]
 
     @property
+    def icon(self):
+        """Return the icon."""
+        return SENSORS[self.sensor_type][3]
+
+    @property
     def entity_registry_enabled_default(self):
         """Return if the entity should be enabled when first added to the entity registry."""
-        return SENSORS[self.sensor_type][3]
+        return SENSORS[self.sensor_type][4]
 
     @property
     def unique_id(self) -> str:
