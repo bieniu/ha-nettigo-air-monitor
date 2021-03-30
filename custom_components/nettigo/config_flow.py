@@ -38,7 +38,7 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             except (ApiError, ClientConnectorError):
                 errors["base"] = "cannot_connect"
             except CannotGetMac:
-                errors["base"] = "device_unsupported"
+                return self.async_abort(reason="device_unsupported")
             else:
 
                 await self.async_set_unique_id(format_mac(mac))

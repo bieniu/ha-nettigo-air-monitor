@@ -10,11 +10,11 @@
       }
     },
     "error": {
-      "cannot_connect": "Nie można się połączyć z urządzeniem",
-      "device_unsupported": "Urządzenie nie jest obsługiwane"
+      "cannot_connect": "Nie można się połączyć z urządzeniem"
     },
     "abort": {
-      "already_configured": "Integracja Nettigo Air Monitor jest już skonfigurowana dla tego urządzenia."
+      "already_configured": "Integracja Nettigo Air Monitor jest już skonfigurowana dla tego urządzenia.",
+      "device_unsupported": "Urządzenie nie jest obsługiwane"
     }
   }
 }

@@ -10,11 +10,11 @@
       }
     },
     "error": {
-      "cannot_connect": "Cannot connect to Nettigo Air Monitor device",
-      "device_unsupported": "The device is unsupported"
+      "cannot_connect": "Cannot connect to Nettigo Air Monitor device"
     },
     "abort": {
-      "already_configured": "Nettigo Air Monitor integration for this device is already configured."
+      "already_configured": "Nettigo Air Monitor integration for this device is already configured.",
+      "device_unsupported": "The device is unsupported"
     }
   }
 }
