@@ -90,6 +90,13 @@ SENSORS = {
         "mdi:blur",
         True,
     ),
+    "SPS30_P4": (
+        f"{DEFAULT_NAME} SPS30 Particulate Matter 4.0",
+        CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
+        None,
+        "mdi:blur",
+        True,
+    ),
     "humidity": (
         f"{DEFAULT_NAME} DHT22 Humidity",
         PERCENTAGE,
