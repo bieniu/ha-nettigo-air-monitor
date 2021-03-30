@@ -70,7 +70,7 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def unique_id(self) -> str:
         """Return a unique_id for this entity."""
-        return f"{self.coordinator.unique_id}-{self.sensor_type}"
+        return f"{self.coordinator.unique_id}-{self.sensor_type}".lower()
 
     @property
     def device_info(self) -> dict:

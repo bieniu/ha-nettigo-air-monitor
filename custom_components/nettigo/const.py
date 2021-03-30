@@ -19,6 +19,8 @@ DEFAULT_UPDATE_INTERVAL = timedelta(minutes=5)
 DOMAIN = "nettigo"
 MANUFACTURER = "Nettigo"
 
+AIR_QUALITY_SENSORS = {"SDS": "SDS011", "SPS30": "SPS30"}
+
 SENSORS = {
     "BME280_humidity": (
         f"{DEFAULT_NAME} BME280 Humidity",

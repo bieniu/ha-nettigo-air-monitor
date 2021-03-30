@@ -9,7 +9,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from .const import ATTR_SENSORS, DEFAULT_NAME, DOMAIN
+from .const import AIR_QUALITY_SENSORS, ATTR_SENSORS, DEFAULT_NAME, DOMAIN
 
 
 async def async_setup_entry(
@@ -19,7 +19,7 @@ async def async_setup_entry(
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
     entities = []
-    for sensor in ["SDS", "SPS30"]:
+    for sensor in AIR_QUALITY_SENSORS.keys():
         if f"{sensor}_P1" in coordinator.data[ATTR_SENSORS]:
             entities.append(NettigoAirQuality(coordinator, sensor))
 
@@ -49,7 +49,7 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     @property
     def name(self) -> str:
         """Return the name."""
-        return f"{DEFAULT_NAME} {self.sensor_type}"
+        return f"{DEFAULT_NAME} {AIR_QUALITY_SENSORS[self.sensor_type]}"
 
     @property
     @round_state
@@ -72,7 +72,7 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     @property
     def unique_id(self) -> str:
         """Return a unique_id for this entity."""
-        return f"{self.coordinator.unique_id}-{self.sensor_type}"
+        return f"{self.coordinator.unique_id}-{self.sensor_type}".lower()
 
     @property
     def device_info(self) -> dict:
