@@ -41,7 +41,7 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def state(self) -> Union[None, str, float]:
         """Return the state."""
-        if self.sensor_type == "BME280_pressure":
+        if self.sensor_type in ["BME280_pressure", "BMP280_pressure"]:
             return round(
                 self.coordinator.data[ATTR_SENSORS].get(self.sensor_type) / 100
             )
