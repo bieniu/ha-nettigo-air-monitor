@@ -5,7 +5,7 @@ from typing import Any, Optional
 
 from aiohttp.client_exceptions import ClientConnectorError
 from async_timeout import timeout
-from nettigo import ApiError, Nettigo
+from nettigo import ApiError, InvalidSensorData, Nettigo
 
 from homeassistant.const import CONF_HOST
 from homeassistant.core import Config, HomeAssistant
@@ -86,7 +86,7 @@ class NettigoUpdateCoordinator(DataUpdateCoordinator):
         try:
             with timeout(10):
                 data = await self.nettigo.async_update()
-        except (ApiError, ClientConnectorError) as error:
+        except (ApiError, ClientConnectorError, InvalidSensorData) as error:
             raise UpdateFailed(error) from error
 
         _LOGGER.debug(data)
