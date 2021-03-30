@@ -13,7 +13,6 @@ from homeassistant.const import (
     TEMP_CELSIUS,
 )
 
-ATTR_SENSORS = "sensordatavalues"
 DEFAULT_NAME = "Nettigo Air Monitor"
 DEFAULT_UPDATE_INTERVAL = timedelta(minutes=5)
 DOMAIN = "nettigo"

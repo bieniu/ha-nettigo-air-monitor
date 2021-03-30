@@ -8,7 +8,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from .const import ATTR_SENSORS, DOMAIN, SENSORS
+from .const import DOMAIN, SENSORS
 
 
 async def async_setup_entry(

@@ -9,7 +9,7 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
 )
 
-from .const import AIR_QUALITY_SENSORS, ATTR_SENSORS, DEFAULT_NAME, DOMAIN
+from .const import AIR_QUALITY_SENSORS, DEFAULT_NAME, DOMAIN
 
 
 async def async_setup_entry(
