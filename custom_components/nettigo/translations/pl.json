@@ -10,7 +10,8 @@
       }
     },
     "error": {
-      "cannot_connect": "Nie można się połączyć z urządzeniem"
+      "cannot_connect": "Nie można się połączyć z urządzeniem",
+      "invalid_host": "Niepoprawna nazwa hosta lub adres IP"
     },
     "abort": {
       "already_configured": "Integracja Nettigo Air Monitor jest już skonfigurowana dla tego urządzenia.",
