@@ -55,6 +55,20 @@ SENSORS = {
         None,
         True,
     ),
+    "HECA_humidity": (
+        f"{DEFAULT_NAME} HECA Humidity",
+        PERCENTAGE,
+        DEVICE_CLASS_HUMIDITY,
+        None,
+        True,
+    ),
+    "HECA_temperature": (
+        f"{DEFAULT_NAME} HECA Temperature",
+        TEMP_CELSIUS,
+        DEVICE_CLASS_TEMPERATURE,
+        None,
+        True,
+    ),
     "SHT3X_humidity": (
         f"{DEFAULT_NAME} SHT3X Humidity",
         PERCENTAGE,
