@@ -55,19 +55,19 @@ class NettigoAirQuality(CoordinatorEntity, AirQualityEntity):
     @round_state
     def particulate_matter_2_5(self) -> Optional[int]:
         """Return the particulate matter 2.5 level."""
-        return getattr(self.coordinator.data, f"{self.sensor_type}_p2")
+        return getattr(self.coordinator.data, f"{self.sensor_type}_p2", None)
 
     @property
     @round_state
     def particulate_matter_10(self) -> Optional[int]:
         """Return the particulate matter 10 level."""
-        return getattr(self.coordinator.data, f"{self.sensor_type}_p1")
+        return getattr(self.coordinator.data, f"{self.sensor_type}_p1", None)
 
     @property
     @round_state
     def carbon_dioxide(self) -> Optional[int]:
         """Return the particulate matter 10 level."""
-        return self.coordinator.data.conc_co2_ppm
+        return getattr(self.coordinator.data, "conc_co2_ppm", None)
 
     @property
     def unique_id(self) -> str:

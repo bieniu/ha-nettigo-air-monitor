@@ -41,7 +41,7 @@ class NettigoSensor(CoordinatorEntity):
     @property
     def state(self) -> Union[None, str, float]:
         """Return the state."""
-        return self.coordinator.data.get(self.sensor_type)
+        return getattr(self.coordinator.data, self.sensor_type)
 
     @property
     def unit_of_measurement(self) -> str:
