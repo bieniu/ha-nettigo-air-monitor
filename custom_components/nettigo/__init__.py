@@ -9,7 +9,7 @@ from nettigo import ApiError, InvalidSensorData, Nettigo
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST
-from homeassistant.core import Config, HomeAssistant
+from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.device_registry import CONNECTION_NETWORK_MAC
@@ -20,13 +20,6 @@ from .const import DEFAULT_NAME, DEFAULT_UPDATE_INTERVAL, DOMAIN, MANUFACTURER
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = ["air_quality", "sensor"]
-
-
-async def async_setup(  # pylint:disable=unused-argument
-    hass: HomeAssistant, config: Config
-) -> bool:
-    """"Old way of setting up Nettigo integrations."""
-    return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
