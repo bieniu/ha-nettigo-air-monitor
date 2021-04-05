@@ -19,7 +19,7 @@ async def async_setup_entry(
     coordinator = hass.data[DOMAIN][entry.entry_id]
 
     entities = []
-    for sensor in AIR_QUALITY_SENSORS.keys():
+    for sensor in AIR_QUALITY_SENSORS:
         if f"{sensor}_p1" in coordinator.data:
             entities.append(NettigoAirQuality(coordinator, sensor))
 

@@ -16,11 +16,10 @@ from homeassistant.helpers.device_registry import format_mac
 from .const import DOMAIN  # pylint:disable=unused-import
 
 
-def host_valid(host):
+def host_valid(host: str) -> bool:
     """Return True if hostname or IP address is valid."""
     try:
-        if ipaddress.ip_address(host).version == (4 or 6):
-            return True
+        return ipaddress.ip_address(host).version == (4 or 6)
     except ValueError:
         disallowed = re.compile(r"[^a-zA-Z\d\-]")
         return all(x and not disallowed.search(x) for x in host.split("."))
