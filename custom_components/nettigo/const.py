@@ -14,7 +14,7 @@ from homeassistant.const import (
 )
 
 DEFAULT_NAME = "Nettigo Air Monitor"
-DEFAULT_UPDATE_INTERVAL = timedelta(minutes=5)
+DEFAULT_UPDATE_INTERVAL = timedelta(minutes=6)
 DOMAIN = "nettigo"
 MANUFACTURER = "Nettigo"
 
