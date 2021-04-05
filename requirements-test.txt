@@ -1,5 +1,10 @@
+aiohttp
+async_timeout
 black
 flake8
+homeassistant
 isort
 mypy
+nettigo
 pylint
+voluptuous
