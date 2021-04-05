@@ -26,7 +26,7 @@ async def async_setup_entry(
     async_add_entities(entities, False)
 
 
-def round_state(func):
+def round_state(func: Callable) -> Callable:
     """Round state."""
 
     def _decorator(self):
