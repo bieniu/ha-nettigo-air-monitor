@@ -48,7 +48,7 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
                 nettigo = Nettigo(websession, user_input[CONF_HOST])
 
-                with async_timeout.timeout(10):
+                with async_timeout.timeout(20):
                     mac = await nettigo.async_get_mac_address()
             except InvalidHost:
                 errors["base"] = "invalid_host"
