@@ -1,6 +1,7 @@
 """Support for the Nettigo service."""
 from typing import Callable, Union
 
+from homeassistant.components.sensor import SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import (
@@ -25,7 +26,7 @@ async def async_setup_entry(
     async_add_entities(sensors, False)
 
 
-class NettigoSensor(CoordinatorEntity):
+class NettigoSensor(CoordinatorEntity, SensorEntity):
     """Define an Nettigo sensor."""
 
     def __init__(self, coordinator: DataUpdateCoordinator, sensor_type: str):
