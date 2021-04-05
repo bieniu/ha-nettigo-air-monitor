@@ -7,6 +7,7 @@ from aiohttp.client_exceptions import ClientConnectorError
 from async_timeout import timeout
 from nettigo import ApiError, InvalidSensorData, Nettigo
 
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_HOST
 from homeassistant.core import Config, HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
@@ -28,7 +29,7 @@ async def async_setup(  # pylint:disable=unused-argument
     return True
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: Config) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Nettigo as config entry."""
     host = entry.data[CONF_HOST]
 
@@ -51,7 +52,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: Config) -> bool:
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: Config) -> bool:
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
