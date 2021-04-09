@@ -4,7 +4,7 @@
   "documentation": "https://github.com/bieniu/ha-nettigo",
   "issue_tracker": "https://github.com/bieniu/ha-nettigo/issues",
   "codeowners": ["@bieniu"],
-  "requirements": ["git+https://github.com/bieniu/nettigo.git@main#nettigo==0.1.4"],
+  "requirements": ["nettigo==0.2.0"],
   "config_flow": true,
-  "version": "0.0.9"
+  "version": "0.1.0"
 }
