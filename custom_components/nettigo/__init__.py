@@ -74,6 +74,9 @@ class NettigoUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> Optional[Any]:
         """Update data via library."""
         try:
+            # Device firmware uses synchronous code and doesn't respond to http queries
+            # when reading data from sensors. The nettigo library tries to get the data
+            # 3 times, so we use a longer than usual timeout here.
             with async_timeout.timeout(20):
                 data = await self.nettigo.async_update()
         except (ApiError, ClientConnectorError, InvalidSensorData) as error:
