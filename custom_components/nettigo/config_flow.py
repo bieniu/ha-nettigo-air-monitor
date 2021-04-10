@@ -1,6 +1,7 @@
 """Adds config flow for Nettigo."""
 import ipaddress
 import re
+import logging
 from typing import Optional
 
 from aiohttp.client_exceptions import ClientConnectorError
@@ -15,6 +16,8 @@ from homeassistant.helpers.device_registry import format_mac
 
 from .const import DOMAIN  # pylint:disable=unused-import
 
+
+_LOGGER = logging.getLogger(__name__)
 
 def host_valid(host: str) -> bool:
     """Return True if hostname or IP address is valid."""
@@ -54,6 +57,9 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "cannot_connect"
             except CannotGetMac:
                 return self.async_abort(reason="device_unsupported")
+            except Exception:  # pylint: disable=broad-except
+                _LOGGER.exception("Unexpected exception")
+                errors["base"] = "unknown"
             else:
 
                 await self.async_set_unique_id(format_mac(mac))
