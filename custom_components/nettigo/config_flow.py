@@ -29,11 +29,8 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Nettigo."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
-
-    def __init__(self):
-        """Initialize."""
-        self._errors = {}
+    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
+    host = None
 
     async def async_step_user(self, user_input: Optional[dict] = None) -> dict:
         """Handle a flow initialized by the user."""
@@ -42,13 +39,14 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         websession = async_get_clientsession(self.hass)
 
         if user_input is not None:
+            host = user_input[CONF_HOST]
             try:
-                if not host_valid(user_input[CONF_HOST]):
+                if not host_valid(host):
                     raise InvalidHost()
 
-                nettigo = Nettigo(websession, user_input[CONF_HOST])
+                nettigo = Nettigo(websession, host)
 
-                with async_timeout.timeout(20):
+                with async_timeout.timeout(5):
                     mac = await nettigo.async_get_mac_address()
             except InvalidHost:
                 errors["base"] = "invalid_host"
@@ -62,7 +60,7 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 self._abort_if_unique_id_configured()
 
                 return self.async_create_entry(
-                    title=user_input[CONF_HOST],
+                    title=host,
                     data=user_input,
                 )
 
@@ -73,6 +71,49 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_HOST, default=""): str,
                 }
             ),
+            errors=errors,
+        )
+
+    async def async_step_zeroconf(self, zeroconf_info: dict) -> dict:
+        """Handle zeroconf discovery."""
+        self.host = zeroconf_info[CONF_HOST]
+        websession = async_get_clientsession(self.hass)
+
+        try:
+            nettigo = Nettigo(websession, self.host)
+            with async_timeout.timeout(5):
+                mac = await nettigo.async_get_mac_address()
+        except (ApiError, ClientConnectorError):
+            return self.async_abort(reason="cannot_connect")
+        except CannotGetMac:
+            return self.async_abort(reason="device_unsupported")
+
+        await self.async_set_unique_id(format_mac(mac))
+        self._abort_if_unique_id_configured({CONF_HOST: self.host})
+
+        self.context["title_placeholders"] = {
+            "name": zeroconf_info.get("name", "").split(".")[0]
+        }
+
+        return await self.async_step_confirm_discovery()
+
+    async def async_step_confirm_discovery(
+        self, user_input: Optional[dict] = None
+    ) -> dict:
+        """Handle discovery confirm."""
+        errors = {}
+
+        if user_input is not None:
+            return self.async_create_entry(
+                title=self.host,
+                data={CONF_HOST: self.host},
+            )
+
+        self._set_confirm_only()
+
+        return self.async_show_form(
+            step_id="confirm_discovery",
+            description_placeholders={CONF_HOST: self.host},
             errors=errors,
         )
 

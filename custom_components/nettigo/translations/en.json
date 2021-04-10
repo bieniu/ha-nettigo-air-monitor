@@ -1,12 +1,15 @@
 {
   "config": {
+    "flow_title": "{name}",
     "step": {
       "user": {
-        "title": "Nettigo Air Monitor",
         "description": "Set up Nettigo Air Monitor integration.",
         "data": {
           "host": "Host"
         }
+      },
+      "confirm_discovery": {
+        "description": "Do you want to set up Nettigo Air Monitor at {host}?"
       }
     },
     "error": {
