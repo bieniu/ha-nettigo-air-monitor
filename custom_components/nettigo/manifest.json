@@ -4,8 +4,8 @@
   "documentation": "https://github.com/bieniu/ha-nettigo",
   "issue_tracker": "https://github.com/bieniu/ha-nettigo/issues",
   "codeowners": ["@bieniu"],
-  "requirements": ["nettigo==0.2.0"],
+  "requirements": ["nettigo==0.2.1"],
   "zeroconf": [{ "type": "_http._tcp.local.", "name": "nam*" }],
   "config_flow": true,
-  "version": "0.1.0"
+  "version": "0.2.1"
 }
