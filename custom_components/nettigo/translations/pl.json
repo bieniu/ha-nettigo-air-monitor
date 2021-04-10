@@ -14,7 +14,6 @@
     },
     "error": {
       "cannot_connect": "Nie można się połączyć z urządzeniem",
-      "invalid_host": "Niepoprawna nazwa hosta lub adres IP",
       "unknown": "Nieoczekiwany b\u0142\u0105d"
     },
     "abort": {

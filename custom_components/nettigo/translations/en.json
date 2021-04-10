@@ -14,7 +14,6 @@
     },
     "error": {
       "cannot_connect": "Cannot connect to Nettigo Air Monitor device",
-      "invalid_host": "Invalid hostname or IP address.",
       "unknown": "Unexpected error"
     },
     "abort": {
