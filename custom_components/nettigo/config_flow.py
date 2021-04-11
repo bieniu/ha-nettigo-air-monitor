@@ -1,4 +1,5 @@
 """Adds config flow for Nettigo."""
+import asyncio
 import logging
 from typing import Optional
 
@@ -66,7 +67,7 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         try:
             mac = await self._async_get_mac(self.host)
-        except (ApiError, ClientConnectorError):
+        except (ApiError, ClientConnectorError, asyncio.TimeoutError):
             return self.async_abort(reason="cannot_connect")
         except CannotGetMac:
             return self.async_abort(reason="device_unsupported")
@@ -102,5 +103,5 @@ class NettigoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Get device MAC address."""
         websession = async_get_clientsession(self.hass)
         nettigo = Nettigo(websession, host)
-        with async_timeout.timeout(5):
+        with async_timeout.timeout(10):
             return await nettigo.async_get_mac_address()
