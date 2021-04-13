@@ -5,6 +5,6 @@ flake8
 homeassistant
 isort
 mypy
-nettigo
+nettigo-air-monitor
 pylint
 voluptuous

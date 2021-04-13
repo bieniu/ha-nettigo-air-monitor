@@ -1,0 +1,11 @@
+{
+  "domain": "nam",
+  "name": "Nettigo Air Monitor",
+  "documentation": "https://www.home-assistant.io/integrations/nam",
+  "issue_tracker": "https://github.com/bieniu/ha-nettigo-air-monitor/issues",
+  "codeowners": ["@bieniu"],
+  "requirements": ["nettigo-air-monitor==0.2.3"],
+  "zeroconf": [{ "type": "_http._tcp.local.", "name": "nam*" }],
+  "config_flow": true,
+  "version": "0.2.3"
+}
