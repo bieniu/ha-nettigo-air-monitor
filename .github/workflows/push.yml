@@ -22,16 +22,16 @@ jobs:
         pip install -r requirements-test.txt
     - name: Check with isort
       run: |
-        isort custom_components/nettigo --check-only
+        isort custom_components/nam --check-only
     - name: Check with Black Code Formatter
       run: |
-        black custom_components/nettigo --check
+        black custom_components/nam --check
     - name: Lint with flake8
       run: |
-        flake8 custom_components/nettigo
+        flake8 custom_components/nam
     - name: Lint with pylint
       run: |
-        pylint custom_components/nettigo
+        pylint custom_components/nam
     - name: Test with mypy
       run: |
-        mypy custom_components/nettigo
+        mypy custom_components/nam
