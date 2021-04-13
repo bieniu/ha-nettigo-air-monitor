@@ -46,7 +46,7 @@ class NAMSensor(CoordinatorEntity, SensorEntity):
     @property
     def state(self) -> str | None:
         """Return the state."""
-        return getattr(self.coordinator.data, self.sensor_type)
+        return getattr(self.coordinator.data, self.sensor_type, None)
 
     @property
     def unit_of_measurement(self) -> str:
