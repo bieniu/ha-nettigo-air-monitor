@@ -46,7 +46,7 @@ class NAMSensor(CoordinatorEntity, SensorEntity):
     @property
     def state(self) -> str | None:
         """Return the state."""
-        return getattr(self.coordinator.data, self.sensor_type, None)
+        return getattr(self.coordinator.data, self.sensor_type)
 
     @property
     def unit_of_measurement(self) -> str:
@@ -77,3 +77,15 @@ class NAMSensor(CoordinatorEntity, SensorEntity):
     def device_info(self) -> dict[str, Any]:
         """Return the device info."""
         return self.coordinator.device_info
+
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        available = super().available
+
+        # For a short time after booting, the device does not return values for all
+        # sensors. For this reason, we mark entities for which data is missing as
+        # unavailable.
+        return available and bool(
+            getattr(self.coordinator.data, self.sensor_type, None)
+        )
