@@ -4,9 +4,9 @@
   "documentation": "https://www.home-assistant.io/integrations/nam",
   "issue_tracker": "https://github.com/bieniu/ha-nettigo-air-monitor/issues",
   "codeowners": ["@bieniu"],
-  "requirements": ["nettigo-air-monitor==0.2.3"],
+  "requirements": ["git+https://github.com/bieniu/nettigo-air-monitor.git@typed-dict#nettigo-air-monitor==0.2.6"],
   "zeroconf": [{ "type": "_http._tcp.local.", "name": "nam-*" }],
   "config_flow": true,
-  "version": "0.2.5",
+  "version": "0.2.6",
   "iot_class": "local_polling"
 }

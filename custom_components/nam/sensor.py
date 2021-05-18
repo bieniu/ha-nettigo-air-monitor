@@ -1,6 +1,7 @@
 """Support for the Nettigo Air Monitor service."""
 from __future__ import annotations
 
+from datetime import timedelta
 from typing import Any
 
 from homeassistant.components.sensor import SensorEntity
@@ -10,6 +11,7 @@ from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
 )
+from homeassistant.util.dt import utcnow
 
 from .const import DOMAIN, SENSORS
 
@@ -25,7 +27,10 @@ async def async_setup_entry(
     sensors = []
     for sensor in SENSORS:
         if sensor in coordinator.data:
-            sensors.append(NAMSensor(coordinator, sensor))
+            if sensor == "uptime":
+                sensors.append(NAMSensorUptime(coordinator, sensor))
+            else:
+                sensors.append(NAMSensor(coordinator, sensor))
 
     async_add_entities(sensors, False)
 
@@ -88,4 +93,18 @@ class NAMSensor(CoordinatorEntity, SensorEntity):
         # unavailable.
         return available and bool(
             getattr(self.coordinator.data, self.sensor_type, None)
+        )
+
+
+class NAMSensorUptime(NAMSensor):
+    """Define an Nettigo Air Monitor uptime sensor."""
+
+    @property
+    def state(self) -> str:
+        """Return the state."""
+        uptime_sec = getattr(self.coordinator.data, self.sensor_type)
+        return (
+            (utcnow() - timedelta(seconds=uptime_sec))
+            .replace(microsecond=0)
+            .isoformat()
         )
